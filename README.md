@@ -1,6 +1,7 @@
 # typescript_basic_nomad
 
-(basic) Nomad - 타입스크립트로 블록체인 만들기
+- (basic) Nomad - 타입스크립트로 블록체인 만들기
+- https://nomadcoders.co/typescript-for-beginners
 
 ## 1. INTRODUCTION
 
@@ -42,15 +43,15 @@
 
 - TypeScript System
 
-  - (1) 명시적 정의 (변수 선언 시 타입 정의)
-  - (2) 변수만 생성 => 타입 추론 (type inference)
-  - (3) readonly 속성 넣기 => 수정 불가 / JS에는 없음
-  - (4) 인덱스 순서에 맞게 [sting, number, boolean] 타입 지정 가능
-  - (5) any => 타입스크립트 보호 장치 빠져 나오는 방법
-  - (6) unknown => 어떤 타입인지 모를 시, 혹은 정해지지 않을 시 사용
+  - (1) **명시적 정의** (변수 선언 시 타입 정의)
+  - (2) 변수만 생성 => **타입 추론** (type inference)
+  - (3) **readonly** 속성 넣기 => 수정 불가 / JS에는 없음
+  - (4) 인덱스 순서에 맞게 [sting, number, boolean] **타입 지정** 가능
+  - (5) **any** => 타입스크립트 보호 장치 빠져 나오는 방법
+  - (6) **unknown** => 어떤 타입인지 모를 시, 혹은 정해지지 않을 시 사용
     - unknown 값으로 작업을 수행할 수 없으므로 any보다 더욱 안전함
-  - (7) void => 함수가 아무것도 리턴하지 않게 함
-  - (8) never => 일부 함수는 값을 반환하지 않음 / throw로 예외 처리하거나 실행 종료 의미
+  - (7) **void** => 함수가 아무것도 리턴하지 않게 함
+  - (8) **never** => 일부 함수는 값을 반환하지 않음 / **throw**로 예외 처리하거나 실행 종료 의미
 
   ```typescript
   // 타입 추론
