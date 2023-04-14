@@ -113,3 +113,100 @@
     }
   }
   ```
+
+## 3. FUNCTIONS
+
+- **(1) call signature (타입 만들기)**
+
+  - 파라미터 타입, 리턴 타입 미리 설계 가능
+
+    ```typescript
+    type Add = (a: number, b: number) => number;
+
+    const add: Add = (a, b) => a + b;
+    ```
+
+- **(2) overloading**
+
+  - 함수가 여러개의 call signature 을 가질때 발생
+
+  ```typescript
+  // overloading Example 1
+  type Add = {
+    (a: number, b: number): number;
+    (a: number, b: string): number;
+  };
+  const add: Add = (a, b) => {
+    if (typeof b == "string") return a;
+    return a + b;
+  };
+
+  // overloading Example 2
+  type Config = {
+    path: string;
+    state: object;
+  };
+
+  type Push = {
+    (path: string): void;
+    (config: Config): void;
+  };
+
+  const push: Push = (config) => {
+    if (typeof config === "string") console.log(config);
+    else console.log(config.path, confi.state);
+  };
+
+  // overloading Example 3 / difference parameter
+  type Add = {
+    (a: number, b: number): number;
+    (a: number, b: number, c: number): number;
+  };
+
+  const add: Add = (a, b, c?: number) => {
+    if (c) return a + b + c;
+    return a + b;
+  };
+  ```
+
+- **(3) polymorphism(다형성)**
+
+  - concrete type / generic type 차이점 이해하기
+  - call signature 에서 타입설정 알 수 없을 때, generic type 사용
+  - Generic : 선언 시점이 아니라 생성 시점에 타입을 명시하여 하나의 타입만이 아닌 다양한 타입을 사용할 수 있도록 하는 기법
+
+  ```typescript
+  // Generic (1)
+  type SuperPrint = <T>(arr: T[]) => T;
+  const superPrint: SuperPrint = (arr) => arr[0];
+
+  const a = superPrint([1, 2, 3, 4]);
+  const b = superPrint([true, false, true]);
+  const c = superPrint(["a", "b", "c"]);
+  const d = superPrint([1, "a", true]);
+
+  // Generic (2)
+  type doubleGeneric = <T, M>(a: T[], b: M) => T;
+
+  // Generic (3)
+  type Player<E> = {
+    name: string;
+    extraInfo: E;
+  };
+  type Extra = {
+    favFood: string;
+  };
+  type PlayerExtra = Player<Extra>;
+
+  const nico: PlayerExtra = {
+    name: "nico",
+    extraInfo: {
+      favFood: "kimchi",
+    },
+  };
+
+  const lynn: Player<null> = {
+    name: "lynn",
+    extraInfo: null,
+  };
+  ```
