@@ -126,6 +126,8 @@
     const add: Add = (a, b) => a + b;
     ```
 
+---
+
 - **(2) overloading**
 
   - 함수가 여러개의 call signature 을 가질때 발생
@@ -169,6 +171,8 @@
   };
   ```
 
+---
+
 - **(3) polymorphism(다형성)**
 
   - concrete type / generic type 차이점 이해하기
@@ -210,3 +214,108 @@
     extraInfo: null,
   };
   ```
+
+## 4. CLASSES AND INTERFACES
+
+- 객체지향 프로그래밍 개념
+
+  - **constructor**의 매개변수를 지정해주면 this.firstName = firstName 같은 자바스크립트 코드로 자동 변환해준다.
+  - **private** 키워드: 클래스 바깥에서 프로퍼티나 메서드에 접근할 수 없게 하는 키워드. 상속받은 클래스에서도 접근할 수 없다.(자바스크립트에서는 작동x)
+  - **protected** 키워드: 자식 클래스에서는 프로퍼티나 메서드에 접근할 수 있게 하고, 외부에서는 접근할 수 없도록 하는 키워드.
+  - **public** 키워드: 모든 클래스에서 접근 가능
+  - **매서드** : 클래스 안에 존재하는 함수
+  - **추상 클래스**: 다른 클래스가 상속 받을 수는 있지만 새로운 인스턴스는 만들 수 없는 클래스
+  - **추상 매서드**
+    - 추상 클래스 안에 만들 수 있는 메서드
+    - 추상 클래스 안에서는 -> 추상 메서드의 call signature만 입력
+    - 추상 클래스를 상속받는 클래스 -> 추상 매서드 call signature에 맞게 구현
+
+  ```ts
+  // (1) 객체 지향 선언
+  class Player {
+    constructor(
+      private firstName: string,
+      private lastName: string,
+      public nickName: string
+    ) {}
+  }
+
+  const nico = new Player("nico", "las", "니꼬");
+  nico.firstName; // private -> Warning
+  nico.nickName; // "니꼬"
+
+  // (2) 추상 클래스 선언 및 활용
+  // 추상 클래스 User
+  abstract class User {
+    constructor(
+      protected firstName: string,
+      protected lastName: string,
+      protected nickName: string
+    ) {}
+    // 추상 매소드
+    abstract getNickName(): void;
+    // 매소드
+    getFullName() {
+      return console.log(`${this.firstName} ${this.lastName}`);
+    }
+  }
+
+  // 추상 클래스를 상속 받은 클래스 Player -> 추상 매소드 구현
+  class Player extends User {
+    getNickName() {
+      console.log(this.nickName);
+    }
+  }
+
+  // Player 클래스 사용해서 인스턴스 만들기
+  const nico = new Player("nico", "las", "니꼬");
+
+  nico.getNickName(); // "니꼬"
+  nico.getFullName(); // "nico las"
+  ```
+
+- 해시맵 / 사전 만들기 실습
+
+  - 딕셔너리, 단어 클래스 만들기
+
+  ```ts
+  // (1) 타입 정의
+  type Words = {
+    // key, value 타입을 정의해 주는 방식
+    [key: string]: string;
+  };
+
+  class Dict {
+    // (2) property(words)를 만들고 원하는대로 초기화하기
+    private words: Words;
+    constructor() {
+      this.words = {};
+    }
+    // (3) 클래스(Word)를 타입으로 사용
+    // -> word 파라미터가 Word 클래스의 인스턴스이기를 원할 때 사용
+    add(word: Word) {
+      if (this.words[word.term] === undefined) {
+        this.words[word.term] = word.def;
+      }
+    }
+    def(term: string) {
+      return this.words[term];
+    }
+  }
+
+  class Word {
+    constructor(public term: string, public def: string) {}
+  }
+
+  const dict = new Dict();
+
+  const kimchi = new Word("kimchi", "한국 음식 김치");
+
+  dict.add(kimchi);
+  console.log(dict.def("kimchi"));
+  ```
+
+  - 코드 챌린지
+    - Dict 클래스 : 단어를 삭제하는 메서드, 단어를 업데이트 하는 메서드 만들기
+    - Word 클래스 : 단어의 정의를 추가하거나 수정하는 메서드, 단어를 출력하는 메서드 만들기
+    - Class, Method, private, public 등등 객체지향 활용해서 만들어 보기
